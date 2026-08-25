@@ -1,3 +1,15 @@
+:root {
+    --soc-paper: #f7f1de;
+    --soc-card: #fffef8;
+    --soc-ink: #131313;
+    --soc-ink-soft: #2d2d2d;
+    --soc-red: #d94841;
+    --soc-blue: #2563eb;
+    --soc-blue-light: #3b82f6;
+    --soc-yellow: #f4c430;
+    --soc-green: #2f8f4e;
+}
+
 /* Soc Ops — Social Bingo utility stylesheet
    Derived from the original Blazor app's Tailwind-like helpers.
    Blazor-specific selectors (#blazor-error-ui, .blazor-error-boundary,
@@ -12,15 +24,6 @@ body {
 body {
     font-family: system-ui, -apple-system, sans-serif;
     -webkit-tap-highlight-color: transparent;
-}
-
-:root {
-    --soc-paper: #f7f1de;
-    --soc-ink: #131313;
-    --soc-red: #d94841;
-    --soc-blue: #2563eb;
-    --soc-yellow: #f4c430;
-    --soc-green: #2f8f4e;
 }
 
 /* ── sizing ────────────────────────────────────────────────────── */
@@ -208,7 +211,7 @@ button:focus-visible {
 .lobby-poster {
     position: relative;
     border: 4px solid var(--soc-ink);
-    background-color: #fffef8;
+    background-color: var(--soc-card);
     padding: 1.5rem;
     box-shadow: 8px 8px 0 var(--soc-ink);
 }
@@ -244,7 +247,7 @@ button:focus-visible {
 
 .lobby-subtitle {
     margin: 0.45rem 0 1rem;
-    color: #313131;
+    color: var(--soc-ink-soft);
     font-size: 0.8rem;
     font-weight: 700;
     letter-spacing: 0.18em;
@@ -266,7 +269,7 @@ button:focus-visible {
 .lobby-briefing-list {
     margin: 0;
     padding-left: 1rem;
-    color: #2d2d2d;
+    color: var(--soc-ink-soft);
     line-height: 1.35;
     font-size: 0.88rem;
 }
@@ -283,9 +286,10 @@ button:focus-visible {
 }
 
 .lobby-signal-dot {
-    width: 0.48rem;
-    height: 0.48rem;
+    width: 0.5rem;
+    height: 0.5rem;
     border: 2px solid var(--soc-ink);
+    border-radius: 50%;
     background-color: var(--soc-green);
     animation: signal-pulse 1.4s step-end infinite;
 }
@@ -297,7 +301,7 @@ button:focus-visible {
     font-size: 0.73rem;
     font-weight: 700;
     letter-spacing: 0.14em;
-    color: #2d2d2d;
+    color: var(--soc-ink-soft);
 }
 
 .lobby-start-button {
@@ -311,6 +315,10 @@ button:focus-visible {
     letter-spacing: 0.08em;
     text-transform: uppercase;
     box-shadow: 5px 5px 0 var(--soc-ink);
+}
+
+.lobby-start-button:hover {
+    background-color: var(--soc-blue-light);
 }
 
 .lobby-start-button:active {
@@ -336,7 +344,7 @@ button:focus-visible {
 
 @keyframes signal-pulse {
     0%, 100% { background-color: var(--soc-green); }
-    50% { background-color: #fffef8; }
+    50% { background-color: var(--soc-card); }
 }
 
 @media (max-width: 480px) {
