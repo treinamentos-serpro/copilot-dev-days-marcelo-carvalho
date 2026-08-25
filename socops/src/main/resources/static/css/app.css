@@ -1,3 +1,15 @@
+:root {
+    --soc-paper: #f7f1de;
+    --soc-card: #fffef8;
+    --soc-ink: #131313;
+    --soc-ink-soft: #2d2d2d;
+    --soc-red: #d94841;
+    --soc-blue: #2563eb;
+    --soc-blue-light: #3b82f6;
+    --soc-yellow: #f4c430;
+    --soc-green: #2f8f4e;
+}
+
 /* Soc Ops — Social Bingo utility stylesheet
    Derived from the original Blazor app's Tailwind-like helpers.
    Blazor-specific selectors (#blazor-error-ui, .blazor-error-boundary,
@@ -155,6 +167,10 @@ button {
     font: inherit;
 }
 button:disabled { cursor: default; }
+button:focus-visible {
+    outline: 3px solid var(--soc-yellow);
+    outline-offset: 2px;
+}
 
 /* ── word-wrapping helpers ─────────────────────────────────────── */
 .wrap-break-word { word-break: break-word; }
@@ -162,6 +178,153 @@ button:disabled { cursor: default; }
 .leading-tight   { line-height: 1.25; }
 
 .min-h-\[60px\] { min-height: 60px; }
+
+/* ── lobby poster variation 3 ───────────────────────────────────── */
+.lobby-screen {
+    position: relative;
+    overflow: hidden;
+    background-color: var(--soc-paper);
+}
+
+.lobby-screen::before,
+.lobby-screen::after {
+    content: "";
+    position: absolute;
+    border: 3px solid var(--soc-ink);
+    pointer-events: none;
+}
+
+.lobby-screen::before {
+    width: 3rem;
+    height: 3rem;
+    top: 1rem;
+    left: 1rem;
+}
+
+.lobby-screen::after {
+    width: 4rem;
+    height: 4rem;
+    right: 1rem;
+    bottom: 1rem;
+}
+
+.lobby-poster {
+    position: relative;
+    border: 4px solid var(--soc-ink);
+    background-color: var(--soc-card);
+    padding: 1.5rem;
+    box-shadow: 8px 8px 0 var(--soc-ink);
+}
+
+.lobby-status-stamp {
+    display: inline-block;
+    margin: 0 0 0.75rem;
+    padding: 0.2rem 0.7rem;
+    border: 3px solid var(--soc-red);
+    color: var(--soc-red);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transform: rotate(-5deg);
+}
+
+.lobby-title {
+    margin: 0;
+    color: var(--soc-ink);
+    line-height: 0.9;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-size: clamp(3rem, 17vw, 5.8rem);
+    font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+    text-shadow:
+        -2px -2px 0 var(--soc-paper),
+        2px -2px 0 var(--soc-paper),
+        -2px 2px 0 var(--soc-paper),
+        2px 2px 0 var(--soc-paper),
+        6px 6px 0 var(--soc-blue);
+}
+
+.lobby-subtitle {
+    margin: 0.45rem 0 1rem;
+    color: var(--soc-ink-soft);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+}
+
+.lobby-briefing {
+    border: 3px solid var(--soc-ink);
+    background-color: var(--soc-paper);
+    padding: 0.85rem;
+}
+
+.lobby-briefing-title {
+    margin: 0 0 0.45rem;
+    text-transform: uppercase;
+    font-size: 0.92rem;
+    letter-spacing: 0.08em;
+}
+
+.lobby-briefing-list {
+    margin: 0;
+    padding-left: 1rem;
+    color: var(--soc-ink-soft);
+    line-height: 1.35;
+    font-size: 0.88rem;
+}
+
+.lobby-briefing-list li + li {
+    margin-top: 0.35rem;
+}
+
+.lobby-signal-row {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    margin: 0.95rem 0;
+}
+
+.lobby-signal-dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    border: 2px solid var(--soc-ink);
+    border-radius: 50%;
+    background-color: var(--soc-green);
+    animation: signal-pulse 1.4s step-end infinite;
+}
+
+.lobby-signal-dot:nth-child(2) { animation-delay: 0.2s; }
+.lobby-signal-dot:nth-child(3) { animation-delay: 0.4s; }
+
+.lobby-signal-text {
+    font-size: 0.73rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    color: var(--soc-ink-soft);
+}
+
+.lobby-start-button {
+    width: 100%;
+    border: 3px solid var(--soc-ink);
+    background-color: var(--soc-blue);
+    color: #fff;
+    padding: 0.95rem 1rem;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    box-shadow: 5px 5px 0 var(--soc-ink);
+}
+
+.lobby-start-button:hover {
+    background-color: var(--soc-blue-light);
+}
+
+.lobby-start-button:active {
+    transform: translate(2px, 2px);
+    box-shadow: 3px 3px 0 var(--soc-ink);
+}
 
 /* ── keyframes ─────────────────────────────────────────────────── */
 @keyframes bounce {
@@ -177,4 +340,31 @@ button:disabled { cursor: default; }
 
 .animate-\[bounce_0\.5s_ease-out\] {
     animation: bounce 0.5s ease-out;
+}
+
+@keyframes signal-pulse {
+    0%, 100% { background-color: var(--soc-green); }
+    50% { background-color: var(--soc-card); }
+}
+
+@media (max-width: 480px) {
+    .lobby-screen { padding: 1rem; }
+    .lobby-poster { padding: 1rem; box-shadow: 5px 5px 0 var(--soc-ink); }
+    .lobby-status-stamp { margin-bottom: 0.5rem; font-size: 0.72rem; }
+    .lobby-subtitle { font-size: 0.72rem; letter-spacing: 0.12em; }
+    .lobby-briefing-list { font-size: 0.84rem; }
+    .lobby-start-button { font-size: 0.95rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .lobby-signal-dot,
+    .animate-\[bounce_0\.5s_ease-out\] {
+        animation: none;
+    }
+
+    .lobby-start-button,
+    .transition-colors,
+    .transition-all {
+        transition: none !important;
+    }
 }

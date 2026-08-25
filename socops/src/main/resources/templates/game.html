@@ -17,23 +17,31 @@
 <!-- ============================================================= -->
 <!--  LOBBY — visible before a game starts                          -->
 <!-- ============================================================= -->
-<div id="lobbyView" class="flex flex-col items-center justify-center min-h-full p-6 bg-gray-50">
-    <div class="text-center max-w-sm">
-        <h1 class="text-4xl font-bold text-gray-900 mb-2">Soc Ops</h1>
-        <p class="text-lg text-gray-600 mb-8">Social Bingo</p>
+<div id="lobbyView" class="lobby-screen flex flex-col items-center justify-center min-h-full p-6 bg-gray-50">
+    <div class="lobby-poster w-full max-w-md">
+        <p class="lobby-status-stamp">LIVE OPS</p>
+        <h1 class="lobby-title">SOC OPS</h1>
+        <p class="lobby-subtitle">SOCIAL BINGO BRIEFING</p>
 
-        <div class="bg-white rounded-lg p-6 shadow-sm border border-gray-200 mb-8">
-            <h2 class="font-semibold text-gray-800 mb-3">How to play</h2>
-            <ul class="text-left text-gray-600 text-sm space-y-2">
-                <li>• Find people who match the questions</li>
-                <li>• Tap a square when you find a match</li>
-                <li>• Get 5 in a row to win!</li>
+        <section class="lobby-briefing" aria-labelledby="briefingTitle">
+            <h2 id="briefingTitle" class="lobby-briefing-title">Mission Briefing</h2>
+            <ul class="lobby-briefing-list">
+                <li>Find people who match each operation prompt.</li>
+                <li>Tap a square when you confirm the match.</li>
+                <li>Complete any row, column, or diagonal to win.</li>
             </ul>
+        </section>
+
+        <div class="lobby-signal-row" aria-hidden="true">
+            <span class="lobby-signal-dot"></span>
+            <span class="lobby-signal-dot"></span>
+            <span class="lobby-signal-dot"></span>
+            <span class="lobby-signal-text">SCAN READY</span>
         </div>
 
         <button onclick="launchGame()"
-                class="w-full bg-accent text-white font-semibold py-4 px-8 rounded-lg text-lg accent-active transition-colors">
-            Start Game
+                class="lobby-start-button accent-active transition-colors">
+            INSERT COIN / START
         </button>
     </div>
 </div>
@@ -46,7 +54,7 @@
     <!-- top bar -->
     <header class="flex items-center justify-between p-3 bg-white border-b border-gray-200">
         <button onclick="retreatToLobby()"
-                class="text-gray-500 text-sm px-3 py-1\.5 rounded tile-active">
+                class="text-gray-500 text-sm px-3 py-2 rounded tile-active">
             &#8592; Back
         </button>
         <h1 class="font-bold text-gray-900">Soc Ops</h1>
