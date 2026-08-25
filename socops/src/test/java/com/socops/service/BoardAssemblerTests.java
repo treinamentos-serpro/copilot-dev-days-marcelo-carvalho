@@ -1,5 +1,6 @@
 package com.socops.service;
 
+import com.socops.data.IcebreakerPrompts;
 import com.socops.model.BingoCell;
 import com.socops.model.WinningStreak;
 
@@ -18,6 +19,12 @@ import static org.junit.jupiter.api.Assertions.*;
  * provided by {@link BoardAssembler}.
  */
 class BoardAssemblerTests {
+
+    @Test
+    @DisplayName("Chaos Bingo catalogue contains twenty-four prompts")
+    void chaosBingoCatalogueHasTwentyFourPrompts() {
+        assertEquals(24, IcebreakerPrompts.ALL_PROMPTS.size());
+    }
 
     /* ── board creation ───────────────────────────────────────── */
 

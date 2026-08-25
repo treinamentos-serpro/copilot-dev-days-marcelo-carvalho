@@ -14,79 +14,106 @@
 </head>
 <body class="h-full">
 
-<!-- ============================================================= -->
-<!--  LOBBY — visible before a game starts                          -->
-<!-- ============================================================= -->
-<div id="lobbyView" class="flex flex-col items-center justify-center min-h-full p-6 bg-gray-50">
-    <div class="text-center max-w-sm">
-        <h1 class="text-4xl font-bold text-gray-900 mb-2">Soc Ops</h1>
-        <p class="text-lg text-gray-600 mb-8">Social Bingo</p>
-
-        <div class="bg-white rounded-lg p-6 shadow-sm border border-gray-200 mb-8">
-            <h2 class="font-semibold text-gray-800 mb-3">How to play</h2>
-            <ul class="text-left text-gray-600 text-sm space-y-2">
-                <li>• Find people who match the questions</li>
-                <li>• Tap a square when you find a match</li>
-                <li>• Get 5 in a row to win!</li>
-            </ul>
+<main id="lobbyView" class="arcade-screen arcade-screen-lobby">
+    <div class="lobby-frame">
+        <div class="eyebrow-row">
+            <span class="eyebrow-mark">[ SYSTEM READY ]</span>
+            <span class="eyebrow-code">B-005 / 1984</span>
         </div>
 
-        <button onclick="launchGame()"
-                class="w-full bg-accent text-white font-semibold py-4 px-8 rounded-lg text-lg accent-active transition-colors">
-            Start Game
-        </button>
+        <section class="title-lockup" aria-labelledby="gameTitle">
+            <div class="title-shadow" aria-hidden="true">SOC OPS</div>
+            <h1 id="gameTitle">SOC OPS</h1>
+            <p class="title-subtitle">SOCIAL BINGO</p>
+        </section>
+
+        <div class="pixel-rule" aria-hidden="true"><span></span><i></i><span></span></div>
+
+        <section class="briefing-panel" aria-labelledby="briefingTitle">
+            <div class="panel-heading">
+                <span class="panel-index">01</span>
+                <h2 id="briefingTitle">MISSION BRIEFING</h2>
+            </div>
+            <ol class="briefing-list">
+                <li><b>01</b><span>Find people who match the prompts.</span></li>
+                <li><b>02</b><span>Mark each square when you find a match.</span></li>
+                <li><b>03</b><span>Complete five in a row to call BINGO.</span></li>
+            </ol>
+        </section>
+
+        <div class="mode-select" aria-label="Choose game mode">
+            <button onclick="launchGame('bingo')" class="arcade-button arcade-button-primary" data-game-mode="bingo">
+                <span class="button-arrow" aria-hidden="true">&gt;</span>
+                <span>INSERT COIN / BINGO</span>
+            </button>
+            <button id="scavengerModeButton" onclick="launchGame('scavenger')" class="arcade-button arcade-button-secondary" data-game-mode="scavenger">
+                <span class="button-arrow" aria-hidden="true">&gt;</span>
+                <span>START SCAVENGER HUNT</span>
+            </button>
+        </div>
+
+        <div class="status-line"><span>LOCAL PLAY</span><span>NO ACCOUNT REQUIRED</span></div>
     </div>
-</div>
+</main>
 
-<!-- ============================================================= -->
-<!--  ACTIVE GAME — board, header, optional bingo banner            -->
-<!-- ============================================================= -->
-<div id="activeView" class="flex flex-col min-h-full bg-gray-50" style="display:none">
-
-    <!-- top bar -->
-    <header class="flex items-center justify-between p-3 bg-white border-b border-gray-200">
-        <button onclick="retreatToLobby()"
-                class="text-gray-500 text-sm px-3 py-1\.5 rounded tile-active">
-            &#8592; Back
+<main id="activeView" class="arcade-screen arcade-screen-game" style="display:none">
+    <header class="game-header">
+        <button onclick="retreatToLobby()" class="arcade-button arcade-button-back">
+            <span aria-hidden="true">&lt;</span> EXIT
         </button>
-        <h1 class="font-bold text-gray-900">Soc Ops</h1>
-        <div class="w-16"></div>
+        <div class="game-brand"><span>SOC</span><strong>OPS</strong></div>
+        <div class="round-readout"><span>ROUND</span><b>01</b></div>
     </header>
 
-    <!-- hint -->
-    <p class="text-center text-gray-500 text-sm py-2 px-4">
-        Tap a square when you find someone who matches it.
-    </p>
+    <section class="game-intro">
+        <div>
+            <p class="section-kicker">FIELD CARD // 5 x 5</p>
+            <h1>Find your people.</h1>
+        </div>
+        <p class="game-hint">Mark a square<br/>when you find a match.</p>
+    </section>
 
-    <!-- bingo banner (hidden until victory) -->
-    <div id="bingoBanner"
-         class="bg-amber-100 text-amber-800 text-center py-2 font-semibold text-sm"
-         style="display:none">
-        &#127881; BINGO! You got a line!
+    <div id="bingoBanner" class="bingo-banner" style="display:none">
+        <span class="banner-star" aria-hidden="true">*</span>
+        <strong>BINGO!</strong>
+        <span>LINE CONFIRMED</span>
+        <span class="banner-star" aria-hidden="true">*</span>
     </div>
 
-    <!-- the 5×5 grid -->
-    <div class="flex-1 flex items-center justify-center p-3">
-        <div id="gridContainer"
-             class="grid grid-cols-5 gap-1 w-full max-w-md mx-auto aspect-square">
+    <div class="board-stage">
+        <div class="board-label board-label-top">SOCIAL BINGO // ACTIVE</div>
+        <div id="gridContainer" class="grid grid-cols-5 gap-1 board-grid">
             <!-- tiles injected by JS -->
         </div>
+        <div class="board-label board-label-bottom"><span>MARK 5</span><span>WIN 1 LINE</span><span>GO!</span></div>
     </div>
-</div>
 
-<!-- ============================================================= -->
-<!--  VICTORY MODAL — overlays the board                            -->
-<!-- ============================================================= -->
-<div id="victoryOverlay"
-     class="fixed inset-0 bg-black\/50 flex items-center justify-center p-4 z-50"
-     style="display:none">
-    <div class="bg-white rounded-xl p-6 max-w-xs w-full text-center shadow-xl animate-[bounce_0.5s_ease-out]">
-        <div class="text-5xl mb-4">&#127881;</div>
-        <h2 class="text-3xl font-bold text-amber-500 mb-2">BINGO!</h2>
-        <p class="text-gray-600 mb-6">You completed a line!</p>
-        <button onclick="dismissVictoryModal()"
-                class="w-full bg-accent text-white font-semibold py-3 px-6 rounded-lg accent-active transition-colors">
-            Keep Playing
+    <section id="scavengerStage" class="scavenger-stage" aria-labelledby="scavengerTitle" hidden>
+        <div class="scavenger-heading">
+            <div>
+                <p class="section-kicker">FIELD LIST // SCAVENGER HUNT</p>
+                <h2 id="scavengerTitle">Find every match.</h2>
+            </div>
+            <label class="scavenger-progress-label" for="scavengerProgress">Progress
+                <progress id="scavengerProgress" max="24" value="0">0 of 24</progress>
+                <span id="scavengerProgressText">0 / 24</span>
+            </label>
+        </div>
+        <ol id="scavengerList" class="scavenger-list" aria-label="Scavenger Hunt prompts">
+            <li class="scavenger-item-template" hidden><label><input type="checkbox"/> Prompt</label></li>
+        </ol>
+    </section>
+</main>
+
+<div id="victoryOverlay" class="fixed inset-0 victory-overlay flex items-center justify-center p-4 z-50" style="display:none">
+    <div class="victory-panel animate-[bounce_0.5s_ease-out]">
+        <div class="victory-burst" aria-hidden="true">* * *</div>
+        <p class="section-kicker">TRANSMISSION RECEIVED</p>
+        <h2>BINGO!</h2>
+        <p class="victory-copy">You completed a line.<br/>The room is yours.</p>
+        <button onclick="dismissVictoryModal()" class="arcade-button arcade-button-primary">
+            <span class="button-arrow" aria-hidden="true">&gt;</span>
+            <span>KEEP PLAYING</span>
         </button>
     </div>
 </div>
@@ -107,6 +134,7 @@
     var streakFound = null;        /* WinningStreak or null       */
     var modalShown  = false;
     var currentPhase = "LOBBY";    /* LOBBY | ACTIVE | VICTORY    */
+    var currentGameMode = "bingo"; /* bingo | scavenger           */
 
     /* ── DOM refs ─────────────────────────────────────────────── */
     var lobbyDiv   = document.getElementById("lobbyView");
@@ -114,14 +142,21 @@
     var gridDiv    = document.getElementById("gridContainer");
     var bannerDiv  = document.getElementById("bingoBanner");
     var overlayDiv = document.getElementById("victoryOverlay");
+    var scavengerStage = document.getElementById("scavengerStage");
+    var scavengerList = document.getElementById("scavengerList");
+    var scavengerProgress = document.getElementById("scavengerProgress");
+    var scavengerProgressText = document.getElementById("scavengerProgressText");
+    var boardStage = document.querySelector(".board-stage");
 
     /* ── phase switching ──────────────────────────────────────── */
     function showPhase(phase) {
         currentPhase = phase;
         lobbyDiv.style.display   = (phase === "LOBBY") ? "" : "none";
         activeDiv.style.display  = (phase !== "LOBBY") ? "" : "none";
-        bannerDiv.style.display  = (streakFound)       ? "" : "none";
-        overlayDiv.style.display = (modalShown)        ? "" : "none";
+        boardStage.hidden = currentGameMode === "scavenger";
+        scavengerStage.hidden = currentGameMode !== "scavenger";
+        bannerDiv.style.display  = (currentGameMode === "bingo" && streakFound) ? "" : "none";
+        overlayDiv.style.display = (currentGameMode === "bingo" && modalShown) ? "" : "none";
     }
 
     /* ── board rendering ──────────────────────────────────────── */
@@ -177,11 +212,41 @@
         }
     }
 
+    function paintScavengerList() {
+        scavengerList.innerHTML = "";
+        var completed = 0;
+
+        for (var t = 0; t < liveTiles.length; t++) {
+            var tile = liveTiles[t];
+            var item = document.createElement("li");
+            var label = document.createElement("label");
+            var checkbox = document.createElement("input");
+            checkbox.type = "checkbox";
+            checkbox.checked = tile.selected;
+            checkbox.disabled = tile.freeCell;
+            checkbox.setAttribute("aria-label", tile.freeCell ? "Free space" : tile.prompt);
+
+            if (!tile.freeCell && tile.selected) { completed++; }
+            label.appendChild(checkbox);
+            label.appendChild(document.createTextNode(tile.prompt));
+            item.className = "scavenger-item" + (tile.selected ? " is-complete" : "");
+            item.appendChild(label);
+            scavengerList.appendChild(item);
+
+            checkbox.addEventListener("change", (function (cid) {
+                return function () { onTileTapped(cid); };
+            })(tile.id));
+        }
+
+        scavengerProgress.value = completed;
+        scavengerProgressText.textContent = completed + " / " + (TOTAL_CELLS - 1);
+    }
+
     /* ── tile tap logic ───────────────────────────────────────── */
     function onTileTapped(cellId) {
         liveTiles = flipTile(liveTiles, cellId);
 
-        if (!streakFound) {
+        if (currentGameMode === "bingo" && !streakFound) {
             var detected = scanForStreak(liveTiles);
             if (detected) {
                 streakFound = detected;
@@ -190,9 +255,13 @@
             }
         }
         persistSnapshot();
-        paintGrid();
-        bannerDiv.style.display  = streakFound ? "" : "none";
-        overlayDiv.style.display = modalShown  ? "" : "none";
+        if (currentGameMode === "scavenger") {
+            paintScavengerList();
+        } else {
+            paintGrid();
+            bannerDiv.style.display  = streakFound ? "" : "none";
+            overlayDiv.style.display = modalShown  ? "" : "none";
+        }
     }
 
     /* ── board manipulation (mirrors BoardAssembler.java) ─────── */
@@ -264,6 +333,7 @@
         try {
             var blob = JSON.stringify({
                 phase: currentPhase,
+                gameMode: currentGameMode,
                 tiles: liveTiles,
                 streak: streakFound,
                 modal: modalShown
@@ -282,21 +352,27 @@
             streakFound = snap.streak || null;
             modalShown  = !!snap.modal;
             currentPhase = snap.phase || "ACTIVE";
+            currentGameMode = snap.gameMode === "scavenger" ? "scavenger" : "bingo";
             return currentPhase !== "LOBBY";
         } catch (_) { return false; }
     }
 
     /* ── public API (called from onclick attrs) ───────────────── */
-    window.launchGame = function () {
+    window.launchGame = function (gameMode) {
         fetch("/api/bingo/fresh-board")
             .then(function (resp) { return resp.json(); })
             .then(function (cells) {
                 liveTiles   = cells;
                 streakFound = null;
                 modalShown  = false;
+                currentGameMode = gameMode === "scavenger" ? "scavenger" : "bingo";
                 currentPhase = "ACTIVE";
                 persistSnapshot();
-                paintGrid();
+                if (currentGameMode === "scavenger") {
+                    paintScavengerList();
+                } else {
+                    paintGrid();
+                }
                 showPhase("ACTIVE");
             });
     };
@@ -306,6 +382,7 @@
         streakFound = null;
         modalShown  = false;
         currentPhase = "LOBBY";
+        currentGameMode = "bingo";
         persistSnapshot();
         showPhase("LOBBY");
     };
@@ -318,7 +395,11 @@
 
     /* ── boot ─────────────────────────────────────────────────── */
     if (restoreSnapshot()) {
-        paintGrid();
+        if (currentGameMode === "scavenger") {
+            paintScavengerList();
+        } else {
+            paintGrid();
+        }
         showPhase(currentPhase);
     } else {
         showPhase("LOBBY");
