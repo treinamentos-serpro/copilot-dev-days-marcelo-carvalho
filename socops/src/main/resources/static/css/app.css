@@ -12,6 +12,218 @@ body {
 body {
     font-family: system-ui, -apple-system, sans-serif;
     -webkit-tap-highlight-color: transparent;
+    color: #161616;
+}
+
+:root {
+    --paper: #f5efdf;
+    --paper-strong: #efe3bf;
+    --ink: #161616;
+    --blue: #2563eb;
+    --red: #dc2626;
+    --yellow: #f59e0b;
+    --green: #16a34a;
+    --grid-line: rgba(22, 22, 22, 0.08);
+    --hard-shadow: 6px 6px 0 0 #161616;
+    --hard-shadow-sm: 4px 4px 0 0 #161616;
+}
+
+button:focus-visible,
+a:focus-visible {
+    outline: 3px solid var(--blue);
+    outline-offset: 3px;
+}
+
+#lobbyView {
+    background-color: var(--paper);
+    background-image:
+        linear-gradient(var(--grid-line) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid-line) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(239, 227, 191, 0.95), rgba(245, 239, 223, 0.98));
+    background-size: 24px 24px, 24px 24px, 100% 100%;
+    background-position: center;
+}
+
+.lobby-shell {
+    box-sizing: border-box;
+}
+
+.mission-console {
+    width: min(100%, 44rem);
+    display: grid;
+    gap: 1rem;
+    padding: 1.5rem;
+    border: 3px solid var(--ink);
+    background: rgba(250, 247, 238, 0.96);
+    box-shadow: var(--hard-shadow);
+}
+
+.mission-lockup,
+.briefing-panel,
+.mission-action,
+.status-card {
+    border: 3px solid var(--ink);
+    background: #fffdf6;
+    box-shadow: var(--hard-shadow-sm);
+}
+
+.mission-lockup {
+    padding: 1.25rem;
+}
+
+.mission-kicker,
+.panel-tag,
+.status-label {
+    margin: 0 0 0.35rem;
+    font-family: "Courier New", Courier, monospace;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+}
+
+.mission-kicker,
+.panel-tag {
+    color: var(--red);
+}
+
+.mission-brand {
+    margin: 0;
+    font-size: clamp(2.8rem, 10vw, 5rem);
+    line-height: 0.95;
+    font-weight: 900;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.mission-subtitle,
+.mission-summary,
+.mission-action-copy,
+.briefing-step-copy,
+.status-value {
+    margin: 0;
+    color: #2f2f2f;
+}
+
+.mission-subtitle {
+    margin-top: 0.6rem;
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.mission-summary {
+    margin-top: 0.75rem;
+    max-width: 34rem;
+    font-size: 0.98rem;
+    line-height: 1.5;
+}
+
+.mission-status {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+}
+
+.status-card {
+    padding: 0.85rem 0.9rem;
+    min-width: 0;
+}
+
+.status-card-blue { background: #dbeafe; }
+.status-card-red { background: #fee2e2; }
+.status-card-yellow { background: #fef3c7; }
+.status-card-green { background: #dcfce7; }
+
+.status-value {
+    display: block;
+    font-size: 1rem;
+    font-weight: 800;
+    line-height: 1.2;
+}
+
+.briefing-panel {
+    padding: 1.1rem 1.1rem 1rem;
+}
+
+.briefing-heading {
+    margin-bottom: 0.75rem;
+}
+
+.briefing-title {
+    margin: 0;
+    font-size: 1.3rem;
+    line-height: 1.15;
+}
+
+.briefing-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.75rem;
+}
+
+.briefing-step {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.75rem;
+    align-items: start;
+    padding: 0.85rem 0.9rem;
+    border: 2px solid var(--ink);
+    background:
+        linear-gradient(90deg, rgba(37, 99, 235, 0.08), rgba(37, 99, 235, 0) 55%),
+        #fff;
+}
+
+.briefing-index {
+    min-width: 2.6rem;
+    padding: 0.35rem 0.4rem;
+    border: 2px solid var(--ink);
+    background: var(--ink);
+    color: #fff;
+    font-family: "Courier New", Courier, monospace;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-align: center;
+}
+
+.briefing-step-title {
+    margin: 0 0 0.2rem;
+    font-size: 1rem;
+    line-height: 1.2;
+}
+
+.briefing-step-copy {
+    font-size: 0.94rem;
+    line-height: 1.45;
+}
+
+.mission-action {
+    padding: 1rem;
+    background:
+        linear-gradient(135deg, rgba(245, 158, 11, 0.12), rgba(245, 158, 11, 0) 52%),
+        #fffdf6;
+}
+
+.mission-action-copy {
+    margin-bottom: 0.85rem;
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+.mission-start {
+    min-height: 3.75rem;
+    border: 3px solid var(--ink);
+    border-radius: 0;
+    box-shadow: var(--hard-shadow-sm);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.mission-start:hover,
+.mission-start:focus-visible {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0 0 #161616;
 }
 
 /* ── sizing ────────────────────────────────────────────────────── */
@@ -177,4 +389,47 @@ button:disabled { cursor: default; }
 
 .animate-\[bounce_0\.5s_ease-out\] {
     animation: bounce 0.5s ease-out;
+}
+
+@media (max-width: 640px) {
+    .mission-console {
+        padding: 1rem;
+        box-shadow: 4px 4px 0 0 #161616;
+    }
+
+    .mission-status {
+        grid-template-columns: 1fr;
+    }
+
+    .mission-lockup,
+    .briefing-panel,
+    .mission-action,
+    .status-card {
+        box-shadow: 3px 3px 0 0 #161616;
+    }
+
+    .briefing-step {
+        grid-template-columns: 1fr;
+    }
+
+    .briefing-index {
+        min-width: 0;
+        width: fit-content;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+    }
+
+    .mission-start:hover,
+    .mission-start:focus-visible {
+        transform: none;
+    }
 }
